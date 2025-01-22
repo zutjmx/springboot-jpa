@@ -22,6 +22,17 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+		listado();
+		encontrarUno();
+	}
+
+	public void encontrarUno() {
+		System.out.println("Utilizando el método findById de CrudRepository");
+		Persona persona = personaRepository.findById(40L).orElseThrow();
+		System.out.println(persona);
+	}
+
+	public void listado() {
 		System.out.println("Ejecutando el método run de la interfaz CommandLineRunner");
 		List<Persona> personas = (List<Persona>) personaRepository.findAll();
 		
@@ -65,7 +76,6 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 			System.out.println("Lenguaje de programación: " + persona[1]);
 			System.out.println("Email: " + persona[2]);
 		});
-
 	}
 
 }
