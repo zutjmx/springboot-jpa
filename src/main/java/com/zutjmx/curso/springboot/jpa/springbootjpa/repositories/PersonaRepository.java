@@ -18,4 +18,6 @@ public interface PersonaRepository extends CrudRepository<Persona, Long> {
 
     @Query("SELECT p FROM Persona p WHERE p.paterno = ?1 and p.materno = ?2")
     List<Persona> buscarPorPaternoYMaterno(String paterno, String materno);
+
+    List<Persona> findByPaternoAndMaterno(String paterno, String materno);
 }

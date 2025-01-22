@@ -51,6 +51,13 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 		);
 		personasPaternoMaterno.stream().forEach(persona -> System.out.println(persona));
 
+		System.out.println("Busqueda de personas por apellidos paterno y materno usando nomenclatura de Spring Data JPA");
+		List<Persona> personasPaternoMaternoSpringDataJPA = personaRepository.findByPaternoAndMaterno(
+			"Raveau", 
+			"Pinson"
+		);
+		personasPaternoMaternoSpringDataJPA.stream().forEach(persona -> System.out.println(persona));
+
 	}
 
 }
