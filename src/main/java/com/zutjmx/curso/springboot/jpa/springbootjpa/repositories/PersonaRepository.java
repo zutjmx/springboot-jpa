@@ -20,4 +20,10 @@ public interface PersonaRepository extends CrudRepository<Persona, Long> {
     List<Persona> buscarPorPaternoYMaterno(String paterno, String materno);
 
     List<Persona> findByPaternoAndMaterno(String paterno, String materno);
+
+    @Query(
+        "SELECT p.nombre, p.lenguajeProgramacion, p.email FROM Persona p"
+    )
+    List<Object[]> obtenerDatosPersonas();
+    
 }

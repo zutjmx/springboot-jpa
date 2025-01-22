@@ -58,6 +58,14 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 		);
 		personasPaternoMaternoSpringDataJPA.stream().forEach(persona -> System.out.println(persona));
 
+		System.out.println("Listado de personas con nombre, lenguaje de programación y email");
+		List<Object[]> datosPersonas = personaRepository.obtenerDatosPersonas();
+		datosPersonas.stream().forEach(persona -> {
+			System.out.println("Nombre: " + persona[0]);
+			System.out.println("Lenguaje de programación: " + persona[1]);
+			System.out.println("Email: " + persona[2]);
+		});
+
 	}
 
 }
