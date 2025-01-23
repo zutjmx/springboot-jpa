@@ -1,6 +1,7 @@
 package com.zutjmx.curso.springboot.jpa.springbootjpa;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -24,12 +25,26 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		listado();
 		encontrarUno();
+		encontrarUnoLamda();
 	}
 
 	public void encontrarUno() {
 		System.out.println("Utilizando el método findById de CrudRepository");
-		Persona persona = personaRepository.findById(40L).orElseThrow();
+		Long id = 20L;
+		Persona persona = null;
+		Optional <Persona> optionalPersona = personaRepository.findById(id);
+		if (optionalPersona.isPresent()) {
+			persona = optionalPersona.get();			
+		} else {
+			System.out.println("No se encontró la persona con id " + id);
+		}
 		System.out.println(persona);
+	}
+
+	public void encontrarUnoLamda() {
+		System.out.println("Utilizando el método findById de CrudRepository con expresión lambda");
+		Long id = 15L;
+		personaRepository.findById(id).ifPresent(persona -> System.out.println(persona));
 	}
 
 	public void listado() {
