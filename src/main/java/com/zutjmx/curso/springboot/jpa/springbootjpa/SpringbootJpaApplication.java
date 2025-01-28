@@ -28,6 +28,8 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 		encontrarUnoLamda();
 		encontrarUnoPersonalizado();
 		encontrarUnoPorNombre();
+		encontrarPorNombreLike();
+		encontrarPorNombreContaining();
 	}
 
 	public void encontrarUnoPersonalizado() {
@@ -43,12 +45,25 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 
 	public void encontrarUnoPorNombre() {
 		System.out.println("Utilizando el método encontrarUnoPorNombre de PersonaRepository personalizado");
-		Optional<Persona> optionalPersona = personaRepository.encontrarUnoPorNombre("Sonia");
+		String nombre = "Sonia";
+		Optional<Persona> optionalPersona = personaRepository.encontrarUnoPorNombre(nombre);
 		if (optionalPersona.isPresent()) {
 			System.out.println(optionalPersona.get());
 		} else {
-			System.out.println("No se encontró la persona con id ");
+			System.out.println("No se encontró la persona con nombre " + nombre);
 		}
+	}
+
+	public void encontrarPorNombreLike() {
+		System.out.println("Utilizando el método encontrarUnoPorNombreLike de PersonaRepository personalizado");
+		String nombre = "S";
+		personaRepository.encontrarUnoPorNombreLike(nombre).stream().forEach(persona -> System.out.println(persona));
+	}
+
+	public void encontrarPorNombreContaining() {
+		System.out.println("Utilizando el método findByNombreContainig de PersonaRepository");
+		String nombre = "ra";
+		personaRepository.findByNombreContaining(nombre).stream().forEach(persona -> System.out.println(persona));
 	}
 
 	public void encontrarUno() {

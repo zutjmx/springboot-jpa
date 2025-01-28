@@ -16,7 +16,12 @@ public interface PersonaRepository extends CrudRepository<Persona, Long> {
     @Query("SELECT p FROM Persona p WHERE p.nombre = ?1")
     Optional<Persona> encontrarUnoPorNombre(String nombre);
 
+    @Query("SELECT p FROM Persona p WHERE p.nombre like %?1%")
+    List<Persona> encontrarUnoPorNombreLike(String nombre);
+
     List<Persona> findByNombre(String nombre);
+    List<Persona> findByNombreContaining(String nombre);
+
     List<Persona> findByEmail(String email);
     List<Persona> findByLenguajeProgramacion(String lenguajeProgramacion);
 
