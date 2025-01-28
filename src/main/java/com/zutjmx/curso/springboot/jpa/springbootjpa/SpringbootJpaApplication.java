@@ -26,6 +26,29 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 		listado();
 		encontrarUno();
 		encontrarUnoLamda();
+		encontrarUnoPersonalizado();
+		encontrarUnoPorNombre();
+	}
+
+	public void encontrarUnoPersonalizado() {
+		System.out.println("Utilizando el método encontrarUno de PersonaRepository personalizado");
+		Long id = 10L;
+		Optional<Persona> optionalPersona = personaRepository.encontrarUno(id);
+		if (optionalPersona.isPresent()) {
+			System.out.println(optionalPersona.get());
+		} else {
+			System.out.println("No se encontró la persona con id " + id);
+		}
+	}
+
+	public void encontrarUnoPorNombre() {
+		System.out.println("Utilizando el método encontrarUnoPorNombre de PersonaRepository personalizado");
+		Optional<Persona> optionalPersona = personaRepository.encontrarUnoPorNombre("Sonia");
+		if (optionalPersona.isPresent()) {
+			System.out.println(optionalPersona.get());
+		} else {
+			System.out.println("No se encontró la persona con id ");
+		}
 	}
 
 	public void encontrarUno() {
