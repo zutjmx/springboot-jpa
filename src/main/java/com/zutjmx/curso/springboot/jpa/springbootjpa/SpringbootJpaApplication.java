@@ -36,6 +36,7 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 		encontrarPorNombreLike();
 		encontrarPorNombreContaining();
 		crear();
+		actualizar();
 	}
 
 	@Transactional
@@ -52,6 +53,35 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 		personaRepository.findById(personaCreada.getId()).ifPresent(personaEncontrada -> {
 			System.out.println("Persona encontrada: " + personaEncontrada);
 		});
+	}
+
+	@Transactional
+	public void actualizar() {
+		System.out.println("Ejecutando el método actualizar de la interfaz CommandLineRunner");
+		Persona personaDatosActualizados = fakeData.getPersona();
+		Long id = fakeData.getLong();
+		System.out.println("Id de la persona a actualizar: " + id);
+		Optional<Persona> optionalPersona = personaRepository.findById(id);
+		if (optionalPersona.isPresent()) {
+			Persona persona = optionalPersona.get();
+
+			System.out.println("Persona encontrada: " + persona);
+			
+			persona.setNombre(personaDatosActualizados.getNombre());
+			persona.setPaterno(personaDatosActualizados.getPaterno());
+			persona.setMaterno(personaDatosActualizados.getMaterno());
+			persona.setEmail(personaDatosActualizados.getEmail());
+			persona.setLenguajeProgramacion(personaDatosActualizados.getLenguajeProgramacion());
+			
+			Persona personaActualizada = personaRepository.save(persona);
+			
+			personaRepository.findById(personaActualizada.getId()).ifPresent(personaEncontrada -> {
+				System.out.println("Persona actualizada: " + personaEncontrada);
+			});
+
+		} else {
+			System.out.println("No se encontró la persona con id " + id);
+		}
 	}
 
 	@Transactional(readOnly = true)

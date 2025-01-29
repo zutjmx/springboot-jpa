@@ -20,4 +20,8 @@ public class FakeData {
         return persona;
     }
 
+    public Long getLong() {
+        return faker.number().numberBetween(1L, 100L);
+    }
+
 }
