@@ -7,16 +7,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.github.javafaker.Faker;
 import com.zutjmx.curso.springboot.jpa.springbootjpa.entities.Persona;
 import com.zutjmx.curso.springboot.jpa.springbootjpa.repositories.PersonaRepository;
+import com.zutjmx.curso.springboot.jpa.springbootjpa.util.FakeData;
 
 @SpringBootApplication
 public class SpringbootJpaApplication implements CommandLineRunner {
 
 	@Autowired
 	private PersonaRepository personaRepository;
+
+	@Autowired
+	private FakeData fakeData;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringbootJpaApplication.class, args);
@@ -34,19 +38,23 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 		crear();
 	}
 
+	@Transactional
 	public void crear() {
 		System.out.println("Ejecutando el método crear de la interfaz CommandLineRunner");
-		Faker faker = new Faker();
-		Persona persona = new Persona();
-		persona.setNombre(faker.name().firstName());
-		persona.setPaterno(faker.name().lastName());
-		persona.setMaterno(faker.name().lastName());
-		persona.setEmail(faker.internet().emailAddress());
-		persona.setLenguajeProgramacion(faker.programmingLanguage().name());
+		Persona persona = fakeData.getPersona();
+		persona.setNombre(persona.getNombre());
+		persona.setPaterno(persona.getPaterno());
+		persona.setMaterno(persona.getMaterno());
+		persona.setEmail(persona.getEmail());
+		persona.setLenguajeProgramacion(persona.getLenguajeProgramacion());
 		Persona personaCreada = personaRepository.save(persona);
 		System.out.println("Persona creada: " + personaCreada);
+		personaRepository.findById(personaCreada.getId()).ifPresent(personaEncontrada -> {
+			System.out.println("Persona encontrada: " + personaEncontrada);
+		});
 	}
 
+	@Transactional(readOnly = true)
 	public void encontrarUnoPersonalizado() {
 		System.out.println("Utilizando el método encontrarUno de PersonaRepository personalizado");
 		Long id = 10L;
@@ -58,6 +66,7 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 		}
 	}
 
+	@Transactional(readOnly = true)
 	public void encontrarUnoPorNombre() {
 		System.out.println("Utilizando el método encontrarUnoPorNombre de PersonaRepository personalizado");
 		String nombre = "Sonia";
@@ -69,18 +78,21 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 		}
 	}
 
+	@Transactional(readOnly = true)
 	public void encontrarPorNombreLike() {
 		System.out.println("Utilizando el método encontrarUnoPorNombreLike de PersonaRepository personalizado");
 		String nombre = "S";
 		personaRepository.encontrarUnoPorNombreLike(nombre).stream().forEach(persona -> System.out.println(persona));
 	}
 
+	@Transactional(readOnly = true)
 	public void encontrarPorNombreContaining() {
 		System.out.println("Utilizando el método findByNombreContainig de PersonaRepository");
 		String nombre = "ra";
 		personaRepository.findByNombreContaining(nombre).stream().forEach(persona -> System.out.println(persona));
 	}
 
+	@Transactional(readOnly = true)
 	public void encontrarUno() {
 		System.out.println("Utilizando el método findById de CrudRepository");
 		Long id = 20L;
@@ -94,12 +106,14 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 		System.out.println(persona);
 	}
 
+	@Transactional(readOnly = true)
 	public void encontrarUnoLamda() {
 		System.out.println("Utilizando el método findById de CrudRepository con expresión lambda");
 		Long id = 15L;
 		personaRepository.findById(id).ifPresent(persona -> System.out.println(persona));
 	}
 
+	@Transactional(readOnly = true)
 	public void listado() {
 		System.out.println("Ejecutando el método run de la interfaz CommandLineRunner");
 		List<Persona> personas = (List<Persona>) personaRepository.findAll();
