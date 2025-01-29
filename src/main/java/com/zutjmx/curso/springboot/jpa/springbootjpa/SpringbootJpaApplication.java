@@ -37,6 +37,8 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 		encontrarPorNombreContaining();
 		crear();
 		actualizar();
+		eliminarPorId();
+		eliminarPorObjeto();
 	}
 
 	@Transactional
@@ -79,6 +81,38 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 				System.out.println("Persona actualizada: " + personaEncontrada);
 			});
 
+		} else {
+			System.out.println("No se encontró la persona con id " + id);
+		}
+	}
+
+	@Transactional
+	public void eliminarPorId() {
+		System.out.println("Ejecutando el método eliminarPorId de la interfaz CommandLineRunner");
+		Long id = fakeData.getLong();
+		System.out.println("Id de la persona a eliminar: " + id);
+		Optional<Persona> optionalPersona = personaRepository.findById(id);
+		if (optionalPersona.isPresent()) {
+			Persona persona = optionalPersona.get();
+			System.out.println("Persona encontrada: " + persona);
+			personaRepository.deleteById(persona.getId());
+			System.out.println("Persona eliminada");
+		} else {
+			System.out.println("No se encontró la persona con id " + id);
+		}
+	}
+
+	@Transactional
+	public void eliminarPorObjeto() {
+		System.out.println("Ejecutando el método eliminarPorObjeto de la interfaz CommandLineRunner");
+		Long id = fakeData.getLong();
+		System.out.println("Id de la persona a eliminar: " + id);
+		Optional<Persona> optionalPersona = personaRepository.findById(id);
+		if (optionalPersona.isPresent()) {
+			Persona persona = optionalPersona.get();
+			System.out.println("Persona encontrada: " + persona);
+			personaRepository.delete(persona);			
+			System.out.println("Persona eliminada");
 		} else {
 			System.out.println("No se encontró la persona con id " + id);
 		}
