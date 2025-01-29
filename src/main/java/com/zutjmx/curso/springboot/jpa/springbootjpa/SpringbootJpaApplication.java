@@ -8,6 +8,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.github.javafaker.Faker;
 import com.zutjmx.curso.springboot.jpa.springbootjpa.entities.Persona;
 import com.zutjmx.curso.springboot.jpa.springbootjpa.repositories.PersonaRepository;
 
@@ -30,6 +31,20 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 		encontrarUnoPorNombre();
 		encontrarPorNombreLike();
 		encontrarPorNombreContaining();
+		crear();
+	}
+
+	public void crear() {
+		System.out.println("Ejecutando el método crear de la interfaz CommandLineRunner");
+		Faker faker = new Faker();
+		Persona persona = new Persona();
+		persona.setNombre(faker.name().firstName());
+		persona.setPaterno(faker.name().lastName());
+		persona.setMaterno(faker.name().lastName());
+		persona.setEmail(faker.internet().emailAddress());
+		persona.setLenguajeProgramacion(faker.programmingLanguage().name());
+		Persona personaCreada = personaRepository.save(persona);
+		System.out.println("Persona creada: " + personaCreada);
 	}
 
 	public void encontrarUnoPersonalizado() {
