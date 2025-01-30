@@ -41,10 +41,13 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 		System.out.println("9 .- actualizar");
 		System.out.println("10 .- eliminarPorId");
 		System.out.println("11 .- eliminarPorObjeto");
+		System.out.println("12 .- obtenerNombrePorId");
+		System.out.println("13 .- obtenerNombreCompletoPorId");
 
 		Scanner	scanner = new Scanner(System.in);
 		System.out.println("Selecciona una opción:");
 		int opcion = scanner.nextInt();
+		scanner.close();
 
 		switch (opcion) {
 			case 1:
@@ -80,12 +83,43 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 			case 11:
 				eliminarPorObjeto();
 				break;
+			case 12:
+				obtenerNombrePorId();
+				break;
+			case 13:
+				obtenerNombreCompletoPorId();
+				break;
 			default:
 				System.out.println("Opción no válida");
 				break;
 		}
+		
+	}
 
-		scanner.close();
+	@Transactional(readOnly = true)
+	public void obtenerNombreCompletoPorId() {
+		System.out.println("Utilizando el método obtenerNombreCompletoPorId de PersonaRepository personalizado");
+		Long id = fakeData.getLong();
+		System.out.println("Id de la persona a buscar: " + id);
+		String nombreCompleto = personaRepository.obtenerNombreCompletoPorId(id);
+		if (nombreCompleto == null) {
+			System.out.println("No se encontró la persona con id " + id);
+		} else {
+			System.out.println("Nombre completo de la persona con id " + id + ": " + nombreCompleto);
+		}
+	}
+
+	@Transactional(readOnly = true)
+	public void obtenerNombrePorId() {
+		System.out.println("Utilizando el método obtenerNombrePorId de PersonaRepository personalizado");
+		Long id = fakeData.getLong();
+		System.out.println("Id de la persona a buscar: " + id);
+		String nombre = personaRepository.obtenerNombrePorId(id);
+		if (nombre == null) {
+			System.out.println("No se encontró la persona con id " + id);
+		} else {
+			System.out.println("Nombre de la persona con id " + id + ": " + nombre);
+		}
 	}
 
 	@Transactional

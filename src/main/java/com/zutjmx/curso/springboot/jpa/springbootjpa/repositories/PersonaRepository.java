@@ -10,6 +10,12 @@ import com.zutjmx.curso.springboot.jpa.springbootjpa.entities.Persona;
 
 public interface PersonaRepository extends CrudRepository<Persona, Long> {
 
+    @Query("SELECT p.nombre FROM Persona p WHERE p.id = ?1")
+    String obtenerNombrePorId(Long id);
+
+    @Query("SELECT concat(p.nombre, ' ', p.paterno, ' ', p.materno) FROM Persona p WHERE p.id = ?1")
+    String obtenerNombreCompletoPorId(Long id);
+
     @Query("SELECT p FROM Persona p WHERE p.id = ?1")
     Optional<Persona> encontrarUno(Long id);
 
