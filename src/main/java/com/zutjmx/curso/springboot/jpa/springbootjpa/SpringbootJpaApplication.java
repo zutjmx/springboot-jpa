@@ -43,6 +43,8 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 		System.out.println("11 .- eliminarPorObjeto");
 		System.out.println("12 .- obtenerNombrePorId");
 		System.out.println("13 .- obtenerNombreCompletoPorId");
+		System.out.println("14 .- obtenerDatosPersonasCompletos");
+		System.out.println("15 .- obtenerDatosPersonasCompletosPorId");
 
 		Scanner	scanner = new Scanner(System.in);
 		System.out.println("Selecciona una opción:");
@@ -89,11 +91,49 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 			case 13:
 				obtenerNombreCompletoPorId();
 				break;
+			case 14:
+				obtenerDatosPersonasCompletos();
+				break;
+			case 15:
+				obtenerDatosPersonasCompletosPorId();
+				break;
 			default:
 				System.out.println("Opción no válida");
 				break;
 		}
 		
+	}
+
+	@Transactional(readOnly = true)
+	public void obtenerDatosPersonasCompletosPorId() {
+		System.out.println("Utilizando el método obtenerDatosPersonasCompletosPorId de PersonaRepository personalizado");
+		Long id = fakeData.getLong();
+		System.out.println("Id de la persona a buscar: " + id);
+		Object[] datosPersona = (Object[]) personaRepository.obtenerDatosPersonasCompletosPorId(id);
+		if (datosPersona == null) {
+			System.out.println("No se encontró la persona con id " + id);
+		} else {
+			System.out.println("Datos de la persona con id: " + datosPersona[0]);
+			System.out.println("Nombre: " + datosPersona[1]);
+			System.out.println("Apellido Paterno: " + datosPersona[2]);
+			System.out.println("Apellido Materno: " + datosPersona[3]);
+			System.out.println("Lenguaje de programación: " + datosPersona[4]);
+			System.out.println("Email: " + datosPersona[5]);
+		}
+	}
+
+	@Transactional(readOnly = true)
+	public void obtenerDatosPersonasCompletos() {
+		System.out.println("Utilizando el método obtenerDatosPersonasCompletos de PersonaRepository personalizado");
+		List<Object[]> datosPersonas = personaRepository.obtenerDatosPersonasCompletos();
+		datosPersonas.stream().forEach(persona -> {
+			System.out.println("Datos de la persona con id: " + persona[0]);
+			System.out.println("Nombre: " + persona[1]);
+			System.out.println("Apellido Paterno: " + persona[2]);
+			System.out.println("Apellido Materno: " + persona[3]);
+			System.out.println("Lenguaje de programación: " + persona[4]);
+			System.out.println("Email: " + persona[5]);
+		});
 	}
 
 	@Transactional(readOnly = true)
