@@ -2,6 +2,7 @@ package com.zutjmx.curso.springboot.jpa.springbootjpa;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -28,17 +29,63 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		listado();
-		encontrarUno();
-		encontrarUnoLamda();
-		encontrarUnoPersonalizado();
-		encontrarUnoPorNombre();
-		encontrarPorNombreLike();
-		encontrarPorNombreContaining();
-		crear();
-		actualizar();
-		eliminarPorId();
-		eliminarPorObjeto();
+		System.out.println("Opciones de la aplicación:");
+		System.out.println("1 .- Listado de personas");
+		System.out.println("2 .- encontrarUno");
+		System.out.println("3 .- encontrarUnoLamda");
+		System.out.println("4 .- encontrarUnoPersonalizado");
+		System.out.println("5 .- encontrarUnoPorNombre");
+		System.out.println("6 .- encontrarPorNombreLike");
+		System.out.println("7 .- encontrarPorNombreContaining");
+		System.out.println("8 .- crear");
+		System.out.println("9 .- actualizar");
+		System.out.println("10 .- eliminarPorId");
+		System.out.println("11 .- eliminarPorObjeto");
+
+		Scanner	scanner = new Scanner(System.in);
+		System.out.println("Selecciona una opción:");
+		int opcion = scanner.nextInt();
+
+		switch (opcion) {
+			case 1:
+				listado();
+				break;
+			case 2:
+				encontrarUno();
+				break;
+			case 3:
+				encontrarUnoLamda();
+				break;
+			case 4:
+				encontrarUnoPersonalizado();
+				break;
+			case 5:
+				encontrarUnoPorNombre();
+				break;
+			case 6:
+				encontrarPorNombreLike();
+				break;
+			case 7:
+				encontrarPorNombreContaining();
+				break;
+			case 8:
+				crear();
+				break;
+			case 9:
+				actualizar();
+				break;
+			case 10:
+				eliminarPorId();
+				break;
+			case 11:
+				eliminarPorObjeto();
+				break;
+			default:
+				System.out.println("Opción no válida");
+				break;
+		}
+
+		scanner.close();
 	}
 
 	@Transactional
