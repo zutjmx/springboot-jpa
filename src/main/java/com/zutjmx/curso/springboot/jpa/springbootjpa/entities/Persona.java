@@ -26,6 +26,12 @@ public class Persona {
     public Persona() {
     }
 
+    public Persona(String nombre, String paterno, String materno) {
+        this.nombre = nombre;
+        this.paterno = paterno;
+        this.materno = materno;
+    }
+
     public Persona(
         Long id, 
         String nombre, 

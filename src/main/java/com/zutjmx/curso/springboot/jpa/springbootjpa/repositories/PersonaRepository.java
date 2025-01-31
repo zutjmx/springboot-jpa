@@ -53,5 +53,15 @@ public interface PersonaRepository extends CrudRepository<Persona, Long> {
         "SELECT p.id, p.nombre, p.paterno, p.materno, p.lenguajeProgramacion, p.email FROM Persona p where p.id = ?1"
     )
     Object obtenerDatosPersonasCompletosPorId(Long id);
+
+    @Query(
+        "SELECT p, p.id, p.nombre, p.paterno, p.materno, p.lenguajeProgramacion, p.email FROM Persona p"
+    )
+    List<Object[]> obtenerListadoPersonasMix();
+
+    @Query(
+        "SELECT new Persona(p.nombre, p.paterno, p.materno) FROM Persona p"
+    )
+    List<Persona> obtenerListadoClasePersona();
     
 }

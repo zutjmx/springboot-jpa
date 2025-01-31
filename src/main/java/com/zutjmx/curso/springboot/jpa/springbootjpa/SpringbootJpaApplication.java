@@ -45,6 +45,8 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 		System.out.println("13 .- obtenerNombreCompletoPorId");
 		System.out.println("14 .- obtenerDatosPersonasCompletos");
 		System.out.println("15 .- obtenerDatosPersonasCompletosPorId");
+		System.out.println("16 .- obtenerListadoPersonasMix");
+		System.out.println("17 .- obtenerListadoClasePersona");
 
 		Scanner	scanner = new Scanner(System.in);
 		System.out.println("Selecciona una opción:");
@@ -97,11 +99,39 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 			case 15:
 				obtenerDatosPersonasCompletosPorId();
 				break;
+			case 16:
+				obtenerListadoPersonasMix();
+				break;
+			case 17:
+				obtenerListadoClasePersona();
+				break;
 			default:
 				System.out.println("Opción no válida");
 				break;
 		}
 		
+	}
+
+	@Transactional(readOnly = true)
+	public void obtenerListadoClasePersona() {
+		System.out.println("Utilizando el método obtenerListadoClasePersona de PersonaRepository personalizado");
+		List<Persona> personas = personaRepository.obtenerListadoClasePersona();
+		personas.stream().forEach(persona -> System.out.println(persona));
+	}
+
+	@Transactional(readOnly = true)
+	public void obtenerListadoPersonasMix() {
+		System.out.println("Utilizando el método obtenerListadoPersonasMix de PersonaRepository personalizado");
+		List<Object[]> datosPersonas = personaRepository.obtenerListadoPersonasMix();
+		datosPersonas.stream().forEach(persona -> {
+			System.out.println("Objeto persona: " + persona[0]);
+			System.out.println("Id de la persona: " + persona[1]);
+			System.out.println("Nombre: " + persona[2]);
+			System.out.println("Apellido Paterno: " + persona[3]);
+			System.out.println("Apellido Materno: " + persona[4]);
+			System.out.println("Lenguaje de programación: " + persona[5]);
+			System.out.println("Email: " + persona[6]);
+		});
 	}
 
 	@Transactional(readOnly = true)
