@@ -49,6 +49,7 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 		System.out.println("16 .- obtenerListadoPersonasMix");
 		System.out.println("17 .- obtenerListadoClasePersona");
 		System.out.println("18 .- obtenerListadoClasePersonaDto");
+		System.out.println("19 .- listarNombres");
 
 		Scanner	scanner = new Scanner(System.in);
 		System.out.println("Selecciona una opción:");
@@ -110,11 +111,21 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 			case 18:
 				obtenerListadoClasePersonaDto();
 				break;
+			case 19:
+				listarNombres();
+				break;
 			default:
 				System.out.println("Opción no válida");
 				break;
 		}
 		
+	}
+
+	@Transactional(readOnly = true)
+	public void listarNombres() {
+		System.out.println("Utilizando el método listarNombres de PersonaRepository personalizado");
+		List<String> nombres = personaRepository.listarNombres();
+		nombres.stream().forEach(nombre -> System.out.println(nombre));
 	}
 
 	@Transactional(readOnly = true)

@@ -69,5 +69,10 @@ public interface PersonaRepository extends CrudRepository<Persona, Long> {
         "SELECT new com.zutjmx.curso.springboot.jpa.springbootjpa.dto.PersonaDto(p.nombre, p.paterno, p.materno, p.email, p.lenguajeProgramacion) FROM Persona p"
     )
     List<PersonaDto> obtenerListadoClasePersonaDto();
+
+    @Query(
+        "SELECT DISTINCT(p.nombre) FROM Persona p"
+    )
+    List<String> listarNombres();
     
 }
