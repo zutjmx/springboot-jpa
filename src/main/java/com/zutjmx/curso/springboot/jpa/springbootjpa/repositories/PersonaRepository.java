@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
+import com.zutjmx.curso.springboot.jpa.springbootjpa.dto.PersonaDto;
 import com.zutjmx.curso.springboot.jpa.springbootjpa.entities.Persona;
 
 public interface PersonaRepository extends CrudRepository<Persona, Long> {
@@ -63,5 +64,10 @@ public interface PersonaRepository extends CrudRepository<Persona, Long> {
         "SELECT new Persona(p.nombre, p.paterno, p.materno) FROM Persona p"
     )
     List<Persona> obtenerListadoClasePersona();
+
+    @Query(
+        "SELECT new com.zutjmx.curso.springboot.jpa.springbootjpa.dto.PersonaDto(p.nombre, p.paterno, p.materno, p.email, p.lenguajeProgramacion) FROM Persona p"
+    )
+    List<PersonaDto> obtenerListadoClasePersonaDto();
     
 }

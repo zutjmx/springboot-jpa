@@ -10,6 +10,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.zutjmx.curso.springboot.jpa.springbootjpa.dto.PersonaDto;
 import com.zutjmx.curso.springboot.jpa.springbootjpa.entities.Persona;
 import com.zutjmx.curso.springboot.jpa.springbootjpa.repositories.PersonaRepository;
 import com.zutjmx.curso.springboot.jpa.springbootjpa.util.FakeData;
@@ -47,6 +48,7 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 		System.out.println("15 .- obtenerDatosPersonasCompletosPorId");
 		System.out.println("16 .- obtenerListadoPersonasMix");
 		System.out.println("17 .- obtenerListadoClasePersona");
+		System.out.println("18 .- obtenerListadoClasePersonaDto");
 
 		Scanner	scanner = new Scanner(System.in);
 		System.out.println("Selecciona una opción:");
@@ -105,11 +107,21 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 			case 17:
 				obtenerListadoClasePersona();
 				break;
+			case 18:
+				obtenerListadoClasePersonaDto();
+				break;
 			default:
 				System.out.println("Opción no válida");
 				break;
 		}
 		
+	}
+
+	@Transactional(readOnly = true)
+	private void obtenerListadoClasePersonaDto() {
+		System.out.println("Utilizando el método obtenerListadoClasePersonaDto de PersonaRepository personalizado");
+		List<PersonaDto> personasDto = personaRepository.obtenerListadoClasePersonaDto();
+		personasDto.stream().forEach(persona -> System.out.println(persona));		
 	}
 
 	@Transactional(readOnly = true)
