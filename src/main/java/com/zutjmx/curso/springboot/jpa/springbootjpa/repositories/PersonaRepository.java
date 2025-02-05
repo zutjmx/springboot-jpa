@@ -86,5 +86,10 @@ public interface PersonaRepository extends CrudRepository<Persona, Long> {
         "SELECT DISTINCT(p.nombre) FROM Persona p"
     )
     List<String> listarNombres();
+
+    @Query(
+        "SELECT DISTINCT(p.lenguajeProgramacion) FROM Persona p"
+    )
+    List<String> listarLenguajesDeProgramacion();
     
 }
