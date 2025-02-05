@@ -65,11 +65,23 @@ public interface PersonaRepository extends CrudRepository<Persona, Long> {
     )
     List<Persona> obtenerListadoClasePersona();
 
+    /**
+     * Retrieves a list of PersonaDto objects that represent Persona entities.
+     * The PersonaDto objects are created by projecting the Persona entity properties
+     * (nombre, paterno, materno, email, lenguajeProgramacion) into a DTO.
+     *
+     * @return a list of PersonaDto objects
+     */
     @Query(
         "SELECT new com.zutjmx.curso.springboot.jpa.springbootjpa.dto.PersonaDto(p.nombre, p.paterno, p.materno, p.email, p.lenguajeProgramacion) FROM Persona p"
     )
     List<PersonaDto> obtenerListadoClasePersonaDto();
 
+    /**
+     * Retrieves a list of distinct names of Persona entities.
+     *
+     * @return a list of distinct names of Persona entities
+     */
     @Query(
         "SELECT DISTINCT(p.nombre) FROM Persona p"
     )
