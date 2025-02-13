@@ -96,5 +96,11 @@ public interface PersonaRepository extends CrudRepository<Persona, Long> {
         "SELECT COUNT(DISTINCT(p.lenguajeProgramacion)) FROM Persona p"
     )
     Long listarLenguajesDeProgramacionConteo();
+
+    //@Query("SELECT concat(p.nombre, ' ', p.paterno, ' ', p.materno) FROM Persona p")
+    //@Query("SELECT p.nombre || ' ' || p.paterno || ' ' || p.materno FROM Persona p")
+    //@Query("SELECT upper(p.nombre || ' ' || p.paterno || ' ' || p.materno) FROM Persona p")
+    @Query("SELECT lower(p.nombre || ' ' || p.paterno || ' ' || p.materno) FROM Persona p")
+    List<String> listadoNombreCompleto();
     
 }

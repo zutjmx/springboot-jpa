@@ -52,6 +52,7 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 		System.out.println("19 .- listarNombres");
 		System.out.println("20 .- listarLenguajesDeProgramacion");
 		System.out.println("21 .- conteoLenguajes");
+		System.out.println("22 .- listadoNombreCompleto");
 
 		Scanner	scanner = new Scanner(System.in);
 		System.out.println("Selecciona una opción:");
@@ -122,11 +123,21 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 			case 21:
 				conteoLenguajes();
 				break;
+			case 22:
+				listadoNombreCompleto();
+				break;
 			default:
 				System.out.println("Opción no válida");
 				break;
 		}
 		
+	}
+
+	@Transactional(readOnly = true)
+	public void listadoNombreCompleto() {
+		System.out.println("Utilizando el método findAll de PersonaRepository");
+		List<String> nombres = personaRepository.listadoNombreCompleto();
+		nombres.stream().forEach(nombre -> System.out.println(nombre));
 	}
 
 	@Transactional(readOnly = true)
