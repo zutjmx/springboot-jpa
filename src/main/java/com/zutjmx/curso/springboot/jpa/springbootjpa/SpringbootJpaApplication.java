@@ -51,6 +51,7 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 		System.out.println("18 .- obtenerListadoClasePersonaDto");
 		System.out.println("19 .- listarNombres");
 		System.out.println("20 .- listarLenguajesDeProgramacion");
+		System.out.println("21 .- conteoLenguajes");
 
 		Scanner	scanner = new Scanner(System.in);
 		System.out.println("Selecciona una opción:");
@@ -118,11 +119,21 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 			case 20:
 				listarLenguajesDeProgramacion();
 				break;
+			case 21:
+				conteoLenguajes();
+				break;
 			default:
 				System.out.println("Opción no válida");
 				break;
 		}
 		
+	}
+
+	@Transactional(readOnly = true)
+	public void conteoLenguajes() {
+		System.out.println("Utilizando el método conteoLenguajes de PersonaRepository personalizado");
+		Long conteo = personaRepository.listarLenguajesDeProgramacionConteo();
+		System.out.println("El conteo de lenguajes es: " + conteo);
 	}
 
 	@Transactional(readOnly = true)
