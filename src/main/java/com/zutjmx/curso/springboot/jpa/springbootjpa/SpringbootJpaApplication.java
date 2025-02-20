@@ -53,6 +53,8 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 		System.out.println("20 .- listarLenguajesDeProgramacion");
 		System.out.println("21 .- conteoLenguajes");
 		System.out.println("22 .- listadoNombreCompleto");
+		System.out.println("23 .- listarPorRangoId");
+		System.out.println("24 .- listarPorRangoNombre");
 
 		Scanner	scanner = new Scanner(System.in);
 		System.out.println("Selecciona una opción:");
@@ -126,11 +128,35 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 			case 22:
 				listadoNombreCompleto();
 				break;
+			case 23:
+				listarPorRangoId();
+				break;
+			case 24:
+				listarPorRangoNombre();
+				break;
 			default:
 				System.out.println("Opción no válida");
 				break;
 		}
 		
+	}
+
+	@Transactional(readOnly = true)
+	public void listarPorRangoNombre() {
+		String nombre1 = "D";
+		String nombre2 = "H";
+		System.out.println("Utilizando el método findAll de PersonaRepository");
+		List<Persona> personas = personaRepository.listarPorRangoNombre(nombre1, nombre2);
+		personas.stream().forEach(persona -> System.out.println(persona));
+	}
+
+	@Transactional(readOnly = true)
+	public void listarPorRangoId() {
+		Long desde = 10L;
+		Long hasta = 40L;
+		System.out.println("Utilizando el método findAll de PersonaRepository");
+		List<Persona> personas = personaRepository.listarPorRangoId(desde, hasta);
+		personas.stream().forEach(persona -> System.out.println(persona));
 	}
 
 	@Transactional(readOnly = true)
