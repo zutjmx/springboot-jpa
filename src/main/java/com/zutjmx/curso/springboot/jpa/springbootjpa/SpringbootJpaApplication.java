@@ -55,6 +55,8 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 		System.out.println("22 .- listadoNombreCompleto");
 		System.out.println("23 .- listarPorRangoId");
 		System.out.println("24 .- listarPorRangoNombre");
+		System.out.println("25 .- listadoUsandoBetweenId");
+		System.out.println("26 .- listadoUsandoBetweenNombre");
 
 		Scanner	scanner = new Scanner(System.in);
 		System.out.println("Selecciona una opción:");
@@ -134,11 +136,35 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 			case 24:
 				listarPorRangoNombre();
 				break;
+			case  25:
+				listadoUsandoBetweenId();
+				break;
+			case 26:
+				listadoUsandoBetweenNombre();
+				break;
 			default:
 				System.out.println("Opción no válida");
 				break;
 		}
 		
+	}
+
+	@Transactional(readOnly = true)
+	public void listadoUsandoBetweenNombre() {
+		System.out.println("Utilizando el método findAll de PersonaRepository");
+		String nombre1 = "F";
+		String nombre2 = "K";
+		List<Persona> personas = personaRepository.findByNombreBetween(nombre1, nombre2);
+		personas.stream().forEach(persona -> System.out.println(persona));
+	}
+
+	@Transactional(readOnly = true)
+	public void listadoUsandoBetweenId() {
+		System.out.println("Utilizando el método findAll de PersonaRepository");
+		Long id1 = 10L;
+		Long id2 = 20L;
+		List<Persona> personas = personaRepository.findByIdBetween(id1, id2);
+		personas.stream().forEach(persona -> System.out.println(persona));
 	}
 
 	@Transactional(readOnly = true)

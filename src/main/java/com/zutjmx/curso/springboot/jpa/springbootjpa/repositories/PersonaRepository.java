@@ -108,5 +108,8 @@ public interface PersonaRepository extends CrudRepository<Persona, Long> {
 
     @Query("SELECT p FROM Persona p WHERE p.nombre between ?1 and ?2")
     List<Persona> listarPorRangoNombre(String nombre1, String nombre2);
+
+    List<Persona> findByIdBetween(Long id1, Long id2);
+    List<Persona> findByNombreBetween(String nombre1, String nombre2);
     
 }
