@@ -103,10 +103,10 @@ public interface PersonaRepository extends CrudRepository<Persona, Long> {
     @Query("SELECT lower(p.nombre || ' ' || p.paterno || ' ' || p.materno) FROM Persona p")
     List<String> listadoNombreCompleto();
 
-    @Query("SELECT p FROM Persona p WHERE p.id between ?1 and ?2")
+    @Query("SELECT p FROM Persona p WHERE p.id between ?1 and ?2 order by p.id")
     List<Persona> listarPorRangoId(Long id1, Long id2);
 
-    @Query("SELECT p FROM Persona p WHERE p.nombre between ?1 and ?2")
+    @Query("SELECT p FROM Persona p WHERE p.nombre between ?1 and ?2 order by p.nombre")
     List<Persona> listarPorRangoNombre(String nombre1, String nombre2);
 
     List<Persona> findByIdBetween(Long id1, Long id2);
