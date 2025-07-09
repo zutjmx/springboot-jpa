@@ -57,6 +57,8 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 		System.out.println("24 .- listarPorRangoNombre");
 		System.out.println("25 .- listadoUsandoBetweenId");
 		System.out.println("26 .- listadoUsandoBetweenNombre");
+		System.out.println("27 .- encontrarPorRangoDeId");
+		System.out.println("28 .- encontrarPorRangoDeNombre");
 
 		Scanner	scanner = new Scanner(System.in);
 		System.out.println("Selecciona una opción:");
@@ -142,6 +144,12 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 			case 26:
 				listadoUsandoBetweenNombre();
 				break;
+			case 27:
+				encontrarPorRangoDeId();
+				break;
+			case 28:
+				encontrarPorRangoDeNombre();
+				break;
 			default:
 				System.out.println("Opción no válida");
 				break;
@@ -150,11 +158,29 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 	}
 
 	@Transactional(readOnly = true)
+	public void encontrarPorRangoDeId() {
+		System.out.println("Utilizando el método encontrarPorRangoDeId de PersonaRepository personalizado");
+		Long id1 = 10L;
+		Long id2 = 20L;
+		List<Persona> personas = personaRepository.encontrarPorRangoDeId(id1, id2);
+		personas.stream().forEach(persona -> System.out.println(persona));
+	}
+
+	@Transactional(readOnly = true)
+	public void encontrarPorRangoDeNombre() {
+		System.out.println("Utilizando el método encontrarPorRangoDeNombre de PersonaRepository personalizado");
+		String nombre1 = "A";
+		String nombre2 = "D";
+		List<Persona> personas = personaRepository.encontrarPorRangoDeNombre(nombre1, nombre2);
+		personas.stream().forEach(persona -> System.out.println(persona));
+	}
+
+	@Transactional(readOnly = true)
 	public void listadoUsandoBetweenNombre() {
 		System.out.println("Utilizando el método findAll de PersonaRepository");
 		String nombre1 = "F";
 		String nombre2 = "K";
-		List<Persona> personas = personaRepository.findByNombreBetween(nombre1, nombre2);
+		List<Persona> personas = personaRepository.findByNombreBetweenOrderByNombreDesc(nombre1, nombre2);
 		personas.stream().forEach(persona -> System.out.println(persona));
 	}
 
@@ -163,7 +189,7 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 		System.out.println("Utilizando el método findAll de PersonaRepository");
 		Long id1 = 10L;
 		Long id2 = 20L;
-		List<Persona> personas = personaRepository.findByIdBetween(id1, id2);
+		List<Persona> personas = personaRepository.findByIdBetweenOrderByIdAsc(id1, id2);
 		personas.stream().forEach(persona -> System.out.println(persona));
 	}
 
