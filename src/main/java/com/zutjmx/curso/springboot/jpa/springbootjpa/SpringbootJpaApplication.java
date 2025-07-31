@@ -61,6 +61,9 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 		System.out.println("28 .- encontrarPorRangoDeNombre");
 		System.out.println("29 .- Listar Personas con orden");
 		System.out.println("30 .- Listar Personas con orden usando findAllByOrderByNombreAsc");
+		System.out.println("31 .- Obtener total de personas");
+		System.out.println("32 .- Obtener mínimo id de personas");
+		System.out.println("33 .- Obtener máximo id de personas");
 
 		Scanner	scanner = new Scanner(System.in);
 		System.out.println("Selecciona una opción:");
@@ -158,11 +161,41 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 			case 30:
 				listadoPorNombreMetodoOrdenado();
 				break;
+			case 31:
+				obtenerTotalDePersonas();
+				break;
+			case 32:
+				obtenerMinimoId();
+				break;
+			case 33:
+				obtenerMaximoId();
+				break;
 			default:
 				System.out.println("Opción no válida");
 				break;
 		}
 		
+	}
+
+	@Transactional(readOnly = true)
+	public void obtenerMaximoId() {
+		System.out.println("Ejecutando el método obtenerMaximoId de PersonaRepository");
+		Long maximoId = personaRepository.obtenerMaximoId();
+		System.out.println("El máximo id es: " + maximoId);
+	}
+
+	@Transactional(readOnly = true)
+	public void obtenerMinimoId() {
+		System.out.println("Ejecutando el método obtenerMinimoId de PersonaRepository");
+		Long minimoId = personaRepository.obtenerMinimoId();
+		System.out.println("El mínimo id es: " + minimoId);
+	}
+
+	@Transactional(readOnly = true)
+	public void obtenerTotalDePersonas() {
+		System.out.println("Ejecutando el método totalDePersonas de PersonaRepository");
+		Long total = personaRepository.totalDePersonas();
+		System.out.println("Total de personas: " + total);
 	}
 
 	@Transactional(readOnly = true)

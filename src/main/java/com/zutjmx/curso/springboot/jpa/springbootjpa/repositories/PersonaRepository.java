@@ -122,5 +122,14 @@ public interface PersonaRepository extends CrudRepository<Persona, Long> {
     List<Persona> listarPersonasConOrden();
 
     List<Persona> findAllByOrderByNombreAsc();
+
+    @Query("SELECT count(p.id) FROM Persona p")
+    Long totalDePersonas();
+
+    @Query("SELECT min(p.id) FROM Persona p")
+    Long obtenerMinimoId();
+
+    @Query("SELECT max(p.id) FROM Persona p")
+    Long obtenerMaximoId();
     
 }
