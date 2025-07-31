@@ -59,6 +59,8 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 		System.out.println("26 .- listadoUsandoBetweenNombre");
 		System.out.println("27 .- encontrarPorRangoDeId");
 		System.out.println("28 .- encontrarPorRangoDeNombre");
+		System.out.println("29 .- Listar Personas con orden");
+		System.out.println("30 .- Listar Personas con orden usando findAllByOrderByNombreAsc");
 
 		Scanner	scanner = new Scanner(System.in);
 		System.out.println("Selecciona una opción:");
@@ -150,11 +152,33 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 			case 28:
 				encontrarPorRangoDeNombre();
 				break;
+			case 29:
+				listarPersonas();
+				break;
+			case 30:
+				listadoPorNombreMetodoOrdenado();
+				break;
 			default:
 				System.out.println("Opción no válida");
 				break;
 		}
 		
+	}
+
+	@Transactional(readOnly = true)
+	public void listadoPorNombreMetodoOrdenado() {
+		System.out.println("Ejecutando el método findAllByOrderByNombreAsc de PersonaRepository");
+		List<Persona> personas = (List<Persona>) personaRepository.findAllByOrderByNombreAsc();
+		System.out.println("Listado de personas usando un forEach con expresión lambda");
+		personas.stream().forEach(persona -> System.out.println(persona));
+	}
+
+	@Transactional(readOnly = true)
+	public List<Persona> listarPersonas() {
+		System.out.println("Utilizando el método listarPersonas de PersonaRepository personalizado");
+		List<Persona> personas = personaRepository.listarPersonasConOrden();
+		personas.stream().forEach(persona -> System.out.println(persona));
+		return personas;
 	}
 
 	@Transactional(readOnly = true)

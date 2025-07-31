@@ -117,5 +117,10 @@ public interface PersonaRepository extends CrudRepository<Persona, Long> {
 
     @Query("SELECT p FROM Persona p WHERE p.nombre >= ?1 and p.nombre <= ?2 order by p.nombre desc, p.paterno asc, p.materno desc")
     List<Persona> encontrarPorRangoDeNombre(String nombre1, String nombre2);
+
+    @Query("SELECT p FROM Persona p order by p.nombre asc")
+    List<Persona> listarPersonasConOrden();
+
+    List<Persona> findAllByOrderByNombreAsc();
     
 }
